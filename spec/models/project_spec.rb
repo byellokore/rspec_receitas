@@ -1,27 +1,29 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Project do
-  describe "basic project working" do
+  describe 'basic project working' do
     let(:project) { Project.new }
     let(:task) { Task.new }
 
-    it "considers a project with no tasks to be done" do
+    it 'considers a project with no tasks to be done' do
       expect(project.done?).to be_truthy
     end
 
-    it "knows that a project with an incomplete task is not done" do
+    it 'knows that a project with an incomplete task is not done' do
       project.tasks << task
       expect(project.done?).to be_falsey
     end
 
-    it "marks a project done if its tasks are done" do
+    it 'marks a project done if its tasks are done' do
       project.tasks << task
       task.mark_completed
       expect(project).to be_done
     end
   end
 
-  describe "estimates" do
+  describe 'estimates' do
     let(:project) { Project.new }
     let(:done) { Task.new(size: 2, completed: true) }
     let(:small_not_done) { Task.new(size: 1) }
@@ -31,13 +33,12 @@ RSpec.describe Project do
       project.tasks = [done, small_not_done, large_not_done]
     end
 
-    it "can calculates total size" do
+    it 'can calculates total size' do
       expect(project.total_size).to eq(7)
     end
 
-    it "can calculate remaining size" do
+    it 'can calculate remaining size' do
       expect(project.remaining_size).to eq(5)
     end
   end
-
 end
